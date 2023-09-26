@@ -1,7 +1,10 @@
 package authorization;
 
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class AuthServerApplication {
@@ -10,4 +13,14 @@ public class AuthServerApplication {
         SpringApplication.run(AuthServerApplication.class, args);
     }
 
+    @Bean
+    public ApplicationRunner dataLoader(
+            UserRepository repo, PasswordEncoder encoder) {
+        return args -> {
+            repo.save(
+                    new User("admin1", encoder.encode("password"), "ROLE_ADMIN"));
+            repo.save(
+                    new User("admin2", encoder.encode("password"), "ROLE_ADMIN"));
+        };
+    }
 }
