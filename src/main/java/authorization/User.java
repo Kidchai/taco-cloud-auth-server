@@ -11,6 +11,7 @@ import java.util.Collection;
 
 @Data
 @Entity
+@Table(name = "users")
 @RequiredArgsConstructor
 @NoArgsConstructor(force = true)
 public class User implements UserDetails {
